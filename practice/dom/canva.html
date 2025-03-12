@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Canva</title>
+    <style>
+      #canva {
+        width: 100vh;
+        height: 90vh;
+        margin: auto;
+        border: 1px solid black;
+        box-sizing: border-box;
+      }
+
+      .draw {
+        width: 10px;
+        aspect-ratio: 1;
+        background-color: black;
+        border-radius: 5px;
+        position: absolute;
+      }
+      
+      .erase {
+        width: 50px;
+        aspect-ratio: 1;
+        background-color: white;
+        border-radius: 50%;
+        position: absolute;
+      }
+
+      #pencil {
+        width: 100px;
+        position: absolute;
+        top: 93vh;
+        left: 80vh;
+      }
+
+      #eraser {
+        width: 100px;
+        position: absolute;
+        top: 93vh;
+        left: 95vh;
+      }
+
+      #clear {
+        width: 100px;
+        position: absolute;
+        top: 93vh;
+        left: 110vh;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="canva" tabindex="0"></div>
+    <script>
+      const canva = document.querySelector("#canva");
+
+      const applyTool = (event, mode) => {
+        const pixel = document.createElement("div");
+        pixel.className = mode;
+        pixel.style.left = `${event.clientX}px`;
+        pixel.style.top = `${event.clientY}px`;
+        canva.appendChild(pixel);
+      };
+
+      const draw = () => {
+        canva.onmousedown = (event) => {
+          canva.onmousemove = (event) => applyTool(event, "draw");
+        };
+
+        canva.onmouseup = (e) => {
+          canva.onmousemove = () => {};
+        };
+      };
+
+      const erase = () => {
+        canva.onmousedown = (event) => {
+          canva.onmousemove = (event) => applyTool(event, "erase");
+        };
+      };
+
+      const createTool = (behaviour) => {
+        const tool = document.createElement("button");
+        tool.setAttribute("id", behaviour);
+        tool.innerText = behaviour;
+        document.body.appendChild(tool);
+
+        return tool;
+      };
+
+      const canvas = () => {
+        const pencil = createTool("pencil");
+        const eraser = createTool("eraser");
+        const clear = createTool("clear");
+
+        pencil.onclick = draw;
+        eraser.onclick = erase;
+        clear.onclick = () => location.reload();
+      };
+
+      canvas();
+    </script>
+  </body>
+</html>

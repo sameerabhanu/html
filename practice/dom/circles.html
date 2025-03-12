@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cool</title>
+    <style>
+      .round {
+        border-radius: 50%;
+        aspect-ratio: 1;
+        position: absolute;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      const colors = [
+        "tomato",
+        "green",
+        "goldenrod",
+        "pink",
+        "magenta",
+        "blue",
+      ];
+      const container = document.body;
+
+      const createCircle = () => {
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        const left = Math.floor(Math.random() * 1800);
+        const top = Math.floor(Math.random() * 900);
+        const width = Math.floor(Math.random() * 100);
+        const circle = document.createElement("div");
+
+        container.appendChild(circle);
+        circle.className = "round";
+        circle.setAttribute(
+          "style",
+          `background-color:${color};left:${left}px;top:${top}px;width:${width}px`
+        );
+
+        setTimeout(() => circle.style.opacity = '40%',4000);
+        setTimeout(() => circle.style.opacity = '20%',6000);
+        setTimeout(() => document.body.removeChild(circle), 8000);
+      };
+
+      setInterval(createCircle, 300);
+    </script>
+  </body>
+</html>

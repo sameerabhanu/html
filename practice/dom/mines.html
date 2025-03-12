@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>mine sweeper</title>
+    <style>
+      #grid {
+        display: grid;
+        grid-template-columns: repeat(3, 100px);
+        grid-template-rows: repeat(3, 100px);
+        gap: 2px;
+
+        position: absolute;
+        top: 30%;
+        left: 40%;
+      }
+
+      h1 {
+        position: absolute;
+        top: 64%;
+        left: 45%;
+      }
+
+      .tile {
+        background-color: grey;
+        border-radius: 10%;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      const printExplsion = () => {
+        const h1 = document.createElement("h1");
+        h1.innerText = "💣BOOM💣";
+        document.body.appendChild(h1);
+      };
+
+      const disableAllTiles = () => {
+        document.querySelectorAll(".tile").forEach((tile) => {
+          tile.style.pointerEvents = "none";
+        });
+      };
+
+      const addTiles = () => {
+        const tiles = document.querySelectorAll(".tile");
+        const bomb = Math.floor(Math.random() * 9) + 1;
+
+        tiles.forEach((tile) => {
+          tile.addEventListener("click", () => {
+            if (tile.id === `tile_${bomb}`) {
+              tile.style.backgroundColor = "red";
+              printExplsion();
+              setTimeout(disableAllTiles, 500);
+            } else {
+              tile.style.backgroundColor = "green";
+            }
+          });
+        });
+      };
+
+      const createTiles = () => {
+        for (let i = 1; i < 10; i++) {
+          const tile = document.createElement("div");
+          document.querySelector("#grid").appendChild(tile);
+          tile.className = "tile";
+          tile.setAttribute("id", `tile_${i}`);
+        }
+      };
+
+      const createGrid = () => {
+        const grid = document.createElement("div");
+        grid.setAttribute("id", "grid");
+        document.body.appendChild(grid);
+      };
+
+      const runGame = () => {
+        createGrid();
+        createTiles();
+        addTiles();
+      };
+
+      runGame();
+    </script>
+  </body>
+</html>
